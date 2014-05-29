@@ -33,11 +33,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.soomla.blueprint.rewards.VirtualItemReward;
+import com.soomla.plugins.ads.vungle.SoomlaVungle;
 import com.soomla.store.*;
 import com.soomla.store.billing.google.GooglePlayIabService;
 import com.soomla.store.data.ObscuredSharedPreferences;
 import com.soomla.store.domain.virtualCurrencies.VirtualCurrency;
 import com.soomla.store.exceptions.VirtualItemNotFoundException;
+import com.vungle.publisher.AdConfig;
+import com.vungle.publisher.EventListener;
+import com.vungle.publisher.VunglePub;
 
 /**
  * In this class <code>StoreController</code> and <code>EventHandler</code> are initialized before
@@ -47,9 +52,12 @@ import com.soomla.store.exceptions.VirtualItemNotFoundException;
  */
 public class StoreExampleActivity extends Activity {
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
+        SoomlaVungle.getInstance().onResume();
     }
 
 
@@ -64,6 +72,8 @@ public class StoreExampleActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SoomlaVungle.getInstance().initialize("testing_app");
         setContentView(R.layout.main);
 
 //        PurchasingManager.registerObserver(new PurchasingObserver(this));
@@ -118,6 +128,14 @@ public class StoreExampleActivity extends Activity {
         }
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SoomlaVungle.getInstance().onPause();
+    }
+
+
 
     /**
      * Puts the SOOMBOT back on the left side of the screen after it was dragged by the user to
@@ -199,10 +217,16 @@ public class StoreExampleActivity extends Activity {
     }
 
     private void openStore() {
+
+
         Intent intent = new Intent(getApplicationContext(), StoreGoodsActivity.class);
         startActivity(intent);
         robotBackHome();
     }
+
+
+
+
 
 
     /** Private Members */

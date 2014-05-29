@@ -30,6 +30,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.soomla.blueprint.rewards.VirtualItemReward;
+import com.soomla.plugins.ads.vungle.SoomlaVungle;
 import com.soomla.store.BusProvider;
 import com.soomla.store.StoreController;
 import com.soomla.store.data.StorageManager;
@@ -70,7 +72,9 @@ public class StoreGoodsActivity extends Activity {
      * @throws IOException
      */
     public void restoreTransactions(View v) throws IOException{
-        StoreController.getInstance().restoreTransactions();
+//        StoreController.getInstance().restoreTransactions();
+        VirtualItemReward r = new VirtualItemReward("a1", "adReward", 1230, "currency_muffin");
+        SoomlaVungle.getInstance().playIncentivisedAd(r);
     }
 
     /**
@@ -174,6 +178,8 @@ public class StoreGoodsActivity extends Activity {
         TextView muffinsBalance = (TextView)findViewById(R.id.balance);
         muffinsBalance.setText("" + StorageManager.getVirtualCurrencyStorage().
                 getBalance(StoreInfo.getCurrencies().get(0)));
+
+        SoomlaVungle.getInstance().onResume();
     }
 
     /**
@@ -183,7 +189,7 @@ public class StoreGoodsActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
+        SoomlaVungle.getInstance().onPause();
         BusProvider.getInstance().unregister(this);
     }
 

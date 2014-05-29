@@ -80,7 +80,7 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Restore Previous Transactions"
+                android:text="Free 1230 muffins"
                 android:id="@+id/button" android:layout_gravity="center" android:onClick="restoreTransactions"/>
 
     </LinearLayout>

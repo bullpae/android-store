@@ -16,9 +16,6 @@
 
 package com.soomla.store;
 
-import com.soomla.store.billing.IIabService;
-//import com.soomla.store.billing.google.GooglePlayIabService;
-
 /**
  * This class holds the store's configurations.
  *
@@ -40,7 +37,7 @@ public class StoreConfig {
     public static String SOOM_SEC = "SINC_SSEEKK";
 
     //Set to true if you want to print out debug messages
-    public static final boolean logDebug = false;
+    public static boolean logDebug = true;
 
     // A friendlyRefunds tells android-store if to let your refunded users keep their VirtualItems
     // after a refund or not. (default: false)
