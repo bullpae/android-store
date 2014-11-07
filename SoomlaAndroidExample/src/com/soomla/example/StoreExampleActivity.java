@@ -33,14 +33,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.soomla.BusProvider;
 import com.soomla.Soomla;
 import com.soomla.SoomlaApp;
 import com.soomla.SoomlaConfig;
 import com.soomla.SoomlaUtils;
 import com.soomla.store.*;
-import com.soomla.store.billing.google.GooglePlayIabService;
+import com.soomla.store.domain.MarketItem;
 import com.soomla.store.domain.virtualCurrencies.VirtualCurrency;
+import com.soomla.store.events.MarketItemsRefreshFinishedEvent;
 import com.soomla.store.exceptions.VirtualItemNotFoundException;
+import com.squareup.otto.Subscribe;
+
+import java.util.List;
 
 /**
  * In this class <code>SoomlaStore</code> and <code>EventHandler</code> are initialized before
@@ -97,10 +102,10 @@ public class StoreExampleActivity extends Activity {
         IStoreAssets storeAssets = new MuffinRushAssets();
         mEventHandler = new ExampleEventHandler(mHandler, this);
 
+        BusProvider.getInstance().register(this);
+
         Soomla.initialize("[CUSTOM SECRET HERE]");
         SoomlaStore.getInstance().initialize(storeAssets);
-        GooglePlayIabService.getInstance().setPublicKey("[YOUR PUBLIC KEY FROM THE MARKET]");
-        GooglePlayIabService.AllowAndroidTestPurchases = true;
 
 
         //FOR TESTING PURPOSES ONLY: Check if it's a first run, if so add 10000 currencies.
@@ -206,6 +211,16 @@ public class StoreExampleActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), StoreGoodsActivity.class);
         startActivity(intent);
         robotBackHome();
+    }
+
+    @Subscribe
+    public void onRefresh(MarketItemsRefreshFinishedEvent marketItemsRefreshFinishedEvent) {
+        List<MarketItem> items = marketItemsRefreshFinishedEvent.getMarketItems();
+        for(MarketItem i : items) {
+            SoomlaUtils.LogError("HEHEHE", i.getProductId());
+            SoomlaUtils.LogError("HEHEHE", i.getMarketPriceAndCurrency());
+            SoomlaUtils.LogError("HEHEHE", i.getMarketTitle());
+        }
     }
 
 

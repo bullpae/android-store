@@ -74,7 +74,7 @@ public class StoreGoodsActivity extends Activity {
      * @throws IOException
      */
     public void restoreTransactions(View v) throws IOException{
-        SoomlaStore.getInstance().restoreTransactions();
+        SoomlaStore.getInstance().refreshMarketItemsDetails();
     }
 
     /**
